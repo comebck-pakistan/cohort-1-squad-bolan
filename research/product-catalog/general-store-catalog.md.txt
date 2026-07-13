@@ -1,0 +1,37 @@
+# General Store Product Catalog
+
+## Purpose
+
+This catalog contains products observed during OCR evaluation of Pakistani distributor and retailer invoices.
+
+It is used as a reference for normalizing handwritten or ambiguous product names during invoice extraction.
+
+---
+
+## Catalog
+
+| ID | Category | Standard Product Name | Common OCR Variants | Notes |
+|----|----------|-----------------------|---------------------|-------|
+| P001 | Dairy | Olper | الپر, Olpers, Olper's | Milk |
+| P002 | Grocery | Sooji | سوجی, Soji | Semolina |
+| P003 | Grocery | Russ | رس, Rus | Local grocery item |
+| P004 | Grocery | Oil Packets | آئل, Oil, Cooking Oil | Cooking oil pouches |
+| P005 | Beverages | Soda | سوڈا | Carbonated drink |
+| P006 | Snacks | Burger | برگر | Snack item |
+| P007 | Bakery | Egg Pane | Egg Pane, Egg Pan, ایگ پین | Bakery item |
+| P008 | Confectionery | Zombie | زومبی | Candy/Confectionery |
+| P009 | Snacks | Jeju Wafer | جیجو ویفر | Wafer |
+| P010 | Snacks | Cake Rush | کیک رش | Cake |
+| P011 | Snacks | Dino Double | ڈینو ڈبل | Biscuit |
+| P012 | Confectionery | Hajmola | ہاجمولا | Candy |
+| P013 | Snacks | Chocomo | Chocomo | Biscuit |
+| P014 | Snacks | Rite | Rite | Biscuit |
+| P015 | Snacks | Chip Hop | Chip Hop | Chips |
+| P016 | Snacks | Day Dream | Day Dream | Biscuit |
+| P017 | Bakery | Flo Cake | Flo | Cake |
+| P018 | Beverage | Mountain Dew | M.DEW | Soft Drink |
+| P019 | Beverage | Sting | STING | Energy Drink |
+| P020 | Confectionery | Magic Bunty | Magic Binty | Candy |
+| P021 | Confectionery | Dragon | Dragon | Candy |
+| P022 | Confectionery | Milky Pop | MilkyPop | Candy |
+| P023 | Confectionery | Choco Paste | Choci Paste | Chocolate |
