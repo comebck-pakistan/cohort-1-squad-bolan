@@ -1,0 +1,295 @@
+# Invoice Dataset Analysis & OCR Research Findings
+
+## 1. Purpose
+
+This document summarizes the observations collected during invoice OCR feasibility testing.
+
+The goal was to understand:
+
+- Types of invoices used by Pakistani FMCG distributors
+- Challenges faced by OCR systems
+- Effect of image quality and handwriting
+- Accuracy limitations
+- Requirements for building a reliable invoice understanding pipeline
+
+Dataset analyzed:
+
+- 09 invoice samples
+- Different suppliers
+- Different formats
+- Printed and handwritten invoices
+- Urdu, English, and mixed-language documents
+
+
+---
+
+# 2. Invoice Dataset Overview
+
+| Invoice ID | Text Type | Primary Language | Handwriting Quality | Layout Structure | Has Total? | Image Quality |
+|---|---|---|---|---|---|---|
+| INV001 | Handwritten | Urdu + English numbers | Poor, heavy overwriting | Informal notebook paper | No explicit total | Medium, shadows and background objects |
+| INV002 | Handwritten | English items + Urdu labels | Good and readable | Pre-printed cash memo | No final total | Good, slight wrinkles |
+| INV003 | Printed | English + Urdu customer fields | N/A | Structured distributor invoice | Yes | Good |
+| INV004 | Printed | English | N/A | Corporate invoice layout | Yes | Excellent |
+| INV005 | Mixed printed + handwritten | English | Moderate handwriting | Catalog style sheet | Yes | Medium, skewed/crumpled |
+| INV006 | Handwritten | Urdu | Moderate | Traditional ledger format | Yes | Clear |
+| INV007 | Printed | English | N/A | Multi-column retail invoice | Yes | Good |
+| INV008 | Handwritten | Urdu + English numbers | Messy handwriting | Manual bill format | Yes | Good |
+| INV009 | Handwritten | Urdu + English | Moderate | Cash voucher style | Yes | Good |
+
+---
+
+# 3. Key Research Findings
+
+
+## Finding 1: Invoice Formats Are Highly Inconsistent
+
+The dataset contains:
+
+- handwritten bills
+- printed distributor invoices
+- cash memos
+- ledger-style invoices
+- corporate FMCG invoices
+
+There is no single fixed format.
+
+### Impact:
+
+A rule-based extraction system will fail because:
+
+- table positions change
+- field names differ
+- products appear differently
+- totals are placed differently
+
+
+### Recommendation:
+
+Use a flexible document understanding pipeline instead of fixed templates.
+
+
+---
+
+# Finding 2: Handwritten Invoices Are the Biggest Challenge
+
+Handwritten invoices caused the majority of OCR errors.
+
+Common issues:
+
+- unclear product names
+- overwritten text
+- crossed-out items
+- Urdu handwriting variations
+- missing totals
+- incomplete words
+
+
+Examples:
+
+- INV001:
+  - product names were difficult even for humans to read
+  - OCR confused similar handwritten words
+
+- INV008:
+  - product catalog improved normalization
+  - however, OCR still confused similar products
+
+
+### Recommendation:
+
+Do not rely only on OCR.
+
+Pipeline should include:
+
+Image OCR
++
+Product Catalog Matching
++
+Confidence Score
++
+Human Verification for uncertain cases
+
+
+---
+
+# Finding 3: Product Catalog Improves Normalization
+
+Without catalog:
+
+Example:
+
+OCR output:
+
+
+Possible interpretations:
+
+- Sweet
+- Cake Rush
+- Other similar products
+
+
+With catalog:
+
+The system can compare extracted text against known products.
+
+Benefits:
+
+- correct spelling mistakes
+- handle Urdu variations
+- normalize product names
+
+
+### Recommendation:
+
+Maintain a product catalog containing:
+
+| Field | Example |
+|-|-|
+| Product ID | SKU001 |
+| English Name | Cake Rush |
+| Urdu Name | کیک رش |
+| Brand | Bisconni |
+| Common OCR Variations | کیک رش / کیک رش فیملی |
+
+
+---
+
+# Finding 4: Printed Invoices Perform Significantly Better
+
+Printed invoices showed much higher accuracy.
+
+Examples:
+
+INV003, INV004, INV007, INV010
+
+Advantages:
+
+- clear tables
+- fixed text
+- readable numbers
+- structured totals
+
+
+OCR successfully extracted:
+
+- invoice numbers
+- customer details
+- taxes
+- discounts
+- product rows
+
+
+---
+
+# Finding 5: Image Quality Directly Affects Accuracy
+
+Problems observed:
+
+- shadows
+- folded papers
+- background objects
+- low contrast
+- tilted images
+
+
+Example:
+
+INV001:
+
+The invoice was difficult because:
+
+- background objects were visible
+- handwriting overlapped
+- lighting was inconsistent
+
+
+### Recommendation:
+
+Before OCR:
+
+Apply image preprocessing:
+
+- crop invoice area
+- remove noise
+- improve contrast
+- correct rotation
+- enhance handwriting regions
+
+
+---
+
+# 4. OCR Testing Observations
+
+## Prompt Evolution
+
+Multiple prompts were tested.
+
+### Early prompts:
+
+Problems:
+
+- model guessed missing values
+- incomplete handwriting was completed incorrectly
+- hallucinated product names
+
+
+### Improved prompts:
+
+Added instructions:
+
+- do not guess
+- return unreadable
+- distinguish absent vs unreadable fields
+- preserve visible text only
+
+
+Result:
+
+Improved reliability.
+
+
+---
+
+# 5. Current Limitations
+
+
+## 1. Product Recognition
+
+Problem:
+
+Similar products create confusion.
+
+Example:
+
+Handwritten versions may look similar.
+
+Solution:
+
+Use:
+
+- product catalog
+- fuzzy matching
+- confidence threshold
+
+
+---
+
+## 2. Handwriting Recognition
+
+Problem:
+
+Some invoices are difficult even for humans.
+
+Solution:
+
+If confidence is low:
+
+Return:
+
+```json
+{
+"product_name":"unreadable",
+"confidence":"low"
+}
+
