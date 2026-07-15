@@ -10,7 +10,9 @@ export class FirebaseAuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     if (this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [context.getHandler(), context.getClass()])) return true;
-    const request = context.switchToHttp().getRequest<Request>();
+    const request = context
+      .switchToHttp()
+      .getRequest<Request & { user: Awaited<ReturnType<FirebaseAdminService['verifyIdToken']>> }>();
     request.user = await this.firebaseAdmin.verifyIdToken(this.bearerToken(request));
     return true;
   }
