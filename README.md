@@ -2,6 +2,13 @@
 
 > **Comebck Pakistan — Cohort 1 · Product Challenge**
 
+## Codebase
+
+This repository is a monorepo for HisaabAI. The NestJS API lives in
+`apps/api`, and the Flutter mobile app lives in `apps/mobile`. See
+[development setup](docs/development.md) for Firebase, local setup, and
+architecture conventions.
+
 ---
 
 ## 👥 Squad Members

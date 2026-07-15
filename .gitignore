@@ -1,0 +1,30 @@
+# Workspace
+node_modules/
+.pnpm-store/
+coverage/
+dist/
+build/
+
+# Environment and Firebase secrets
+.env
+.env.*
+!.env.example
+service-account*.json
+google-services.json
+GoogleService-Info.plist
+
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.idea/
+*.iml
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/ephemeral/
+android/.gradle/
+android/app/.cxx/
+
+# Platform tooling
+.DS_Store
