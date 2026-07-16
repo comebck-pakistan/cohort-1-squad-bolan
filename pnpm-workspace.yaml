@@ -1,2 +1,6 @@
 packages:
   - apps/api
+allowBuilds:
+  '@firebase/util': false
+  '@swc/core': false
+  protobufjs: false
