@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/routing/app_router.dart';
+import '../core/theme/app_theme.dart';
 
 class HisaabAiApp extends ConsumerWidget {
   const HisaabAiApp({super.key});
@@ -10,10 +11,8 @@ class HisaabAiApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       title: 'HisaabAI',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF00695C)),
-        useMaterial3: true,
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
       routerConfig: ref.watch(routerProvider),
     );
   }
